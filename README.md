@@ -1,5 +1,5 @@
 # JFS-Assignment-Building-an-OOP-based-Java-Application
-Design a simple library management system. The system should manage books, members, and borrowing transactions. Your application should demonstrate the use of OOP principles.
+Design and implement a Java-based library management system to manage books, members, and borrowing transactions using Object-Oriented Programming principles like classes, inheritance, polymorphism, and encapsulation. Showcase features such as adding books, registering members, borrowing transactions, and validation. A hands-on way to grasp advanced programming concepts for practical applications.
 
 ## Assignment Objective
 To apply your understanding of Object-Oriented Programming (OOP) concepts in Java by designing and implementing a small Java application using classes, objects, inheritance, polymorphism, and encapsulation.
