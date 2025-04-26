@@ -23,6 +23,7 @@ public class LibraryManagementSystem {
         ArrayList<Book> bookList2 = new ArrayList<>();
         bookList2.add(book2);
         bookList2.add(ebook2);
+        bookList2.add(ebook3);
 
         library.addBook(book1);
         library.addBook(book2);
@@ -34,6 +35,10 @@ public class LibraryManagementSystem {
         library.addBook(ebook3);
         library.addBook(ebook4);
         library.addBook(ebook5);
+
+        library.displayBooks();
+        library.displayAvailableBooks();
+        library.displayUnavailableBooks();
 
         // Registering regular and premium members.
         Member member1 = new Member();
@@ -58,12 +63,17 @@ public class LibraryManagementSystem {
         library.registerMember(premiumMember4);
         library.registerMember(premiumMember5);
 
+        library.displayMembers();
 
-        // Borrowing books for members and displaying the updated
-        // list of available books.
-        System.out.println(library);
+        // Borrow a book for a member
+        member1.displayDetails();
+        member1.borrowBook(book2);
+        member1.borrowBooks(bookList2);
+
+        library.displayAvailableBooks();
 
         // Displaying member details along with borrowed books.
+        member1.displayDetails();
 
     }
 }

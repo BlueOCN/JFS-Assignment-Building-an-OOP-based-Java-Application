@@ -21,6 +21,38 @@ public class Book {
         this.availability = availability;
     }
 
+    // Getters & Setters
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return this.author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getISBN() {
+        return this.ISBN;
+    }
+
+    public void setISBN(int ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public boolean getAvailability() {
+        return this.availability;
+    }
+    public void setAvailability(boolean availability) {
+        this.availability = availability;
+    }
+
     // Methods: ???
 
     @Override
