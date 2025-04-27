@@ -65,10 +65,13 @@ public class LibraryManagementSystem {
 
         library.displayMembers();
 
-        // Borrow a book for a member
+        // Borrow a book for a member v1
         member1.displayDetails();
         member1.borrowBook(book2);
         member1.borrowBooks(bookList2);
+
+        // Borrow a book for a member from library v2
+
 
         library.displayAvailableBooks();
 
