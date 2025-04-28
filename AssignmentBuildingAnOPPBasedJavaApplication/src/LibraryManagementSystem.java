@@ -3,18 +3,18 @@ import java.util.ArrayList;
 public class LibraryManagementSystem {
     public static void main(String[] args) {
 
-        // Adding books and eBooks to the library.
+        // Creating books and eBooks.
         Library library = new Library();
         Book book1 = new Book();
-        Book book2 = new Book("Java Programming", "Alice Johnson", 111111, true);
-        Book book3 = new Book("Data Structures", "Bob Smith", 222222, false);
-        Book book4 = new Book("Design Patterns", "Catherine Lee", 333333, true);
-        Book book5 = new Book("Algorithms Unlocked", "David Brown", 444444, false);
+        Book book2 = new Book("Java Programming", "Alice Johnson", 0, 111111, true);
+        Book book3 = new Book("Data Structures", "Bob Smith", 1, 222222, true);
+        Book book4 = new Book("Design Patterns", "Catherine Lee", 2, 333333, true);
+        Book book5 = new Book("Algorithms Unlocked", "David Brown", 3, 444444, false);
         Ebook ebook1 = new Ebook();
-        Ebook ebook2 = new Ebook("Learning Java", "John Doe", 123456, true, 2048, "PDF");
-        Ebook ebook3 = new Ebook("Advanced Programming", "Jane Smith", 789012, false, 5120, "EPUB");
-        Ebook ebook4 = new Ebook("The Art of Coding", "Robert Brown", 345678, true, 1024, "MOBI");
-        Ebook ebook5 = new Ebook("Mastering Algorithms", "Emily Davis", 901234, false, 8192, "AZW");
+        Ebook ebook2 = new Ebook("Learning Java", "John Doe", 4,123456, true, 2048, "PDF");
+        Ebook ebook3 = new Ebook("Advanced Programming", "Jane Smith", 5, 789012, false, 5120, "EPUB");
+        Ebook ebook4 = new Ebook("The Art of Coding", "Robert Brown", 6, 345678, true, 1024, "MOBI");
+        Ebook ebook5 = new Ebook("Mastering Algorithms", "Emily Davis", 7, 901234, true, 8192, "AZW");
 
         ArrayList<Book> bookList1 = new ArrayList<>();
         bookList1.add(book1);
@@ -25,6 +25,7 @@ public class LibraryManagementSystem {
         bookList2.add(ebook2);
         bookList2.add(ebook3);
 
+        // Add books and eBooks to the library.
         library.addBook(book1);
         library.addBook(book2);
         library.addBook(book3);
@@ -36,11 +37,12 @@ public class LibraryManagementSystem {
         library.addBook(ebook4);
         library.addBook(ebook5);
 
+        // Display Libraries Inventory
         library.displayBooks();
         library.displayAvailableBooks();
         library.displayUnavailableBooks();
 
-        // Registering regular and premium members.
+        // Create regular and premium members.
         Member member1 = new Member();
         Member member2 = new Member("John Doe", 101, book1);
         Member member3 = new Member("Jane Smith", 102, book2);
@@ -52,6 +54,7 @@ public class LibraryManagementSystem {
         PremiumMember premiumMember4 = new PremiumMember("Robert Brown", 107, bookList1);
         PremiumMember premiumMember5 = new PremiumMember("Emily Davis", 108, bookList2);
 
+        // Register regular and premium members.
         library.registerMember(member1);
         library.registerMember(member2);
         library.registerMember(member3);
@@ -63,20 +66,24 @@ public class LibraryManagementSystem {
         library.registerMember(premiumMember4);
         library.registerMember(premiumMember5);
 
+        // Display regular and premium members.
         library.displayMembers();
 
-        // Borrow a book for a member v1
-        member1.displayDetails();
-        member1.borrowBook(book2);
-        member1.borrowBooks(bookList2);
+        // Borrow a book for a member from library.
+        member2.displayDetails();
+        premiumMember2.displayDetails();
 
-        // Borrow a book for a member from library v2
+        library.assignBookToMember(101, 2);
 
+        int memberID2 = 105;
+        int[] bookIDs = { 4, 2, 6, 7, 1};
+        library.assignBooksToMember(memberID2, bookIDs);
 
-        library.displayAvailableBooks();
+        library.displayAvailableBooks(); // Books are no longer available
 
         // Displaying member details along with borrowed books.
-        member1.displayDetails();
+        member2.displayDetails();
+        premiumMember2.displayDetails();
 
     }
 }

@@ -56,19 +56,86 @@ public class Library {
         this.membersCollection.add(member);
     }
 
+    public void assignBookToMember(int memberId, int bookId) {
+
+        // Find the book
+        Book borrowedBook = null;
+        for (Book book : booksCollection) {
+            if (book.getId() == bookId) {
+                book.setAvailability(false);
+                borrowedBook = book;
+                break;
+            }
+        }
+
+        if (borrowedBook == null) {
+            throw new IllegalArgumentException("Book not found");
+        }
+
+        // Find the member
+        Member user = null;
+        for (Member member : membersCollection) {
+            if (member.getMemberId() == memberId) {
+                member.borrowBook(borrowedBook);
+                user = member;
+                break; // Exit loop once the member is found
+            }
+        }
+
+        if (user == null) {
+            throw new IllegalArgumentException("Member not found");
+        }
+
+    }
+
+    public void assignBooksToMember(int memberId, int[] bookId) {
+
+        // Find the book
+        ArrayList<Book> borrowedBooks = new ArrayList<>();
+        for (Book book : booksCollection) {
+            for (int id : bookId) {
+                if (book.getId() == id && book.getAvailability()) {
+                    book.setAvailability(false);
+                    borrowedBooks.add(book);
+                }
+            }
+        }
+
+        if (borrowedBooks.isEmpty()) {
+            throw new IllegalArgumentException("Books not found");
+        }
+
+        // Find the member
+        Member user = null;
+        for (Member member : membersCollection) {
+            if (member.getMemberId() == memberId) {
+                member.borrowBooks(borrowedBooks);
+                user = member;
+                break; // Exit loop once the member is found
+            }
+        }
+
+        if (user == null) {
+            throw new IllegalArgumentException("Member not found");
+        }
+
+    }
+
     public void displayBooks() {
         System.out.println("\n  \033[1mAll Books\033[0m\n");
-        System.out.printf("| %-38s| %-38s| %-38s| %-38s|\n",
+        System.out.printf("| %-60s| %-46s| %-25s| %-25s| %-25s|\n",
                 "\033[1m" + "Title" + "\033[0m",
                 "\033[1m" + "Author" + "\033[0m",
+                "\033[1m" + "Id" + "\033[0m",
                 "\033[1m" + "ISBN" + "\033[0m",
                 "\033[1m" + "Availability" + "\033[0m");
 
         // Print table rows
         for (Book book : booksCollection) {
-            System.out.printf("| %-30s| %-30s| %-30s| %-30s|\n",
+            System.out.printf("| %-52s| %-38s| %-17s| %-17s| %-17s|\n",
                     book.getTitle(),
                     book.getAuthor(),
+                    book.getId(),
                     book.getISBN(),
                     book.getAvailability());
         }
@@ -76,9 +143,10 @@ public class Library {
 
     public void displayAvailableBooks() {
         System.out.println("\n  \033[1mAvailable Books\033[0m\n");
-        System.out.printf("| %-38s| %-38s| %-38s| %-38s|\n",
+        System.out.printf("| %-60s| %-46s| %-25s| %-25s| %-25s|\n",
                 "\033[1m" + "Title" + "\033[0m",
                 "\033[1m" + "Author" + "\033[0m",
+                "\033[1m" + "Id" + "\033[0m",
                 "\033[1m" + "ISBN" + "\033[0m",
                 "\033[1m" + "Availability" + "\033[0m");
 
@@ -87,9 +155,10 @@ public class Library {
             if (!book.getAvailability()){
                 continue;
             }
-            System.out.printf("| %-30s| %-30s| %-30s| %-30s|\n",
+            System.out.printf("| %-52s| %-38s| %-17s| %-17s| %-17s|\n",
                     book.getTitle(),
                     book.getAuthor(),
+                    book.getId(),
                     book.getISBN(),
                     book.getAvailability());
         }
@@ -97,9 +166,10 @@ public class Library {
 
     public void displayUnavailableBooks() {
         System.out.println("\n  \033[1mUnavailable Books\033[0m\n");
-        System.out.printf("| %-38s| %-38s| %-38s| %-38s|\n",
+        System.out.printf("| %-60s| %-46s| %-25s| %-25s| %-25s|\n",
                 "\033[1m" + "Title" + "\033[0m",
                 "\033[1m" + "Author" + "\033[0m",
+                "\033[1m" + "Id" + "\033[0m",
                 "\033[1m" + "ISBN" + "\033[0m",
                 "\033[1m" + "Availability" + "\033[0m");
 
@@ -108,9 +178,10 @@ public class Library {
             if (book.getAvailability()){
                 continue;
             }
-            System.out.printf("| %-30s| %-30s| %-30s| %-30s|\n",
+            System.out.printf("| %-52s| %-38s| %-17s| %-17s| %-17s|\n",
                     book.getTitle(),
                     book.getAuthor(),
+                    book.getId(),
                     book.getISBN(),
                     book.getAvailability());
         }

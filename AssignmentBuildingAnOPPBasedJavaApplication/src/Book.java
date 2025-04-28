@@ -3,6 +3,7 @@ public class Book {
     // Attributes: title, author, ISBN and availability
     private String title;
     private String author;
+    private int id;
     private int ISBN;
     private boolean availability;
 
@@ -10,13 +11,15 @@ public class Book {
     public Book() {
         this.title = "NA";
         this.author = "NA";
+        this.id = 0;
         this.ISBN = 0;
         this.availability = false;
     }
 
-    public Book(String title, String author, int ISBN, boolean availability) {
+    public Book(String title, String author, int id, int ISBN, boolean availability) {
         this.title = title;
         this.author = author;
+        this.id = id;
         this.ISBN = ISBN;
         this.availability = availability;
     }
@@ -38,6 +41,14 @@ public class Book {
         this.author = author;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getISBN() {
         return this.ISBN;
     }
@@ -49,6 +60,7 @@ public class Book {
     public boolean getAvailability() {
         return this.availability;
     }
+
     public void setAvailability(boolean availability) {
         this.availability = availability;
     }

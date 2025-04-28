@@ -29,7 +29,7 @@ public class Member {
     // Methods: ???
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -37,7 +37,7 @@ public class Member {
     }
 
     public int getMemberId() {
-        return memberId;
+        return this.memberId;
     }
 
     public void setMemberId(int memberId) {
@@ -45,7 +45,7 @@ public class Member {
     }
 
     public ArrayList<Book> getBorrowedBooks() {
-        return borrowedBooks;
+        return this.borrowedBooks;
     }
 
     public void setBorrowedBooks(ArrayList<Book> borrowedBooks) {
@@ -53,7 +53,7 @@ public class Member {
     }
 
     public int getBorrowingLimit() {
-        return borrowingLimit;
+        return this.borrowingLimit;
     }
 
     public void setBorrowingLimit(int borrowingLimit) {
@@ -62,32 +62,39 @@ public class Member {
 
     // Methods
     public void borrowBook(Book borrowedBook) {
-        if (borrowedBook.getAvailability()) {
-            this.borrowedBooks.add(borrowedBook);
+        if (this.borrowedBooks.size() + 1 > borrowingLimit) {
+            throw new IllegalArgumentException("Borrowing limit exceeded: You will need to leave "
+                    + (borrowingLimit - this.borrowedBooks.size()) + " or more books");
         }
+        this.borrowedBooks.add(borrowedBook);
     }
 
     public void borrowBooks(ArrayList<Book> booksList) {
+        if (this.borrowedBooks.size() + booksList.size() > borrowingLimit) {
+            throw new IllegalArgumentException("Borrowing limit exceeded: You will need to leave "
+                    + (borrowingLimit - this.borrowedBooks.size()) + " or more books");
+        }
         for (Book book : booksList) {
-            if (book.getAvailability()) {
-                this.borrowedBooks.add(book);
-            }
+            this.borrowedBooks.add(book);
         }
     }
 
     public void displayDetails() {
-        System.out.printf("\n  \033[1mMember:\033[0m %-56s\033[1mId:\033[0m %-56s\n\n", name, memberId);
-        System.out.printf("| %-38s| %-38s| %-38s| %-38s|\n",
+        System.out.printf("\n  \033[1mMember:\033[0m %-56s\033[1mId:\033[0m %-56s\n", name, memberId);
+        System.out.println("  \033[1mBorrowed Books:\033[0m\n");
+        System.out.printf("| %-60s| %-46s| %-25s| %-25s| %-25s|\n",
                 "\033[1m" + "Title" + "\033[0m",
                 "\033[1m" + "Author" + "\033[0m",
+                "\033[1m" + "Id" + "\033[0m",
                 "\033[1m" + "ISBN" + "\033[0m",
                 "\033[1m" + "Availability" + "\033[0m");
 
         // Print table rows
         for (Book book : borrowedBooks) {
-            System.out.printf("| %-30s| %-30s| %-30s| %-30s|\n",
+            System.out.printf("| %-52s| %-38s| %-17s| %-17s| %-17s|\n",
                     book.getTitle(),
                     book.getAuthor(),
+                    book.getId(),
                     book.getISBN(),
                     book.getAvailability());
         }
