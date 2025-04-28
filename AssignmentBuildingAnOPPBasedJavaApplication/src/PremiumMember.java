@@ -8,16 +8,21 @@ public class PremiumMember extends Member {
     // Borrowing more books
     public PremiumMember() {
         super();
-        super.setName("NA");
-        super.setMemberId(0);
-        super.setBorrowedBooks(new ArrayList<>());
         super.setBorrowingLimit(premiumLimit); // Override the borrowing limit
     }
-    public PremiumMember(String name, int memberId, Book borrowedBook) {
+    public PremiumMember(String name, Book borrowedBook) {
+        super(name, borrowedBook); // Call Member's constructor
+        super.setBorrowingLimit(premiumLimit); // Override the borrowing limit
+    }
+    public PremiumMember(String name, ArrayList<Book> borrowedBooks) {
+        super(name, borrowedBooks); // Call Member's constructor
+        super.setBorrowingLimit(premiumLimit); // Override the borrowing limit
+    }
+    public PremiumMember(String name, String memberId, Book borrowedBook) {
         super(name, memberId, borrowedBook); // Call Member's constructor
         super.setBorrowingLimit(premiumLimit); // Override the borrowing limit
     }
-    public PremiumMember(String name, int memberId, ArrayList<Book> borrowedBooks) {
+    public PremiumMember(String name, String memberId, ArrayList<Book> borrowedBooks) {
         super(name, memberId, borrowedBooks); // Call Member's constructor
         super.setBorrowingLimit(premiumLimit); // Override the borrowing limit
     }

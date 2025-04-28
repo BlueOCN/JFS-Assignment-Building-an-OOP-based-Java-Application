@@ -12,7 +12,13 @@ public class Ebook extends Book {
         this.fileSize = 500;
     }
 
-    public Ebook(String title, String author, int id, int ISBN, boolean availability, int fileSize, String fileFormat) {
+    public Ebook(String title, String author, String ISBN, boolean availability, int fileSize, String fileFormat) {
+        super(title, author, ISBN, availability);
+        this.fileFormat = fileFormat;
+        this.fileSize = fileSize;
+    }
+
+    public Ebook(String title, String author, String id, String ISBN, boolean availability, int fileSize, String fileFormat) {
         super(title, author, id, ISBN, availability);
         this.fileFormat = fileFormat;
         this.fileSize = fileSize;

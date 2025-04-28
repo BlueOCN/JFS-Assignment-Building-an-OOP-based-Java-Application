@@ -1,22 +1,32 @@
+import java.util.UUID;
+
 public class Book {
 
     // Attributes: title, author, ISBN and availability
     private String title;
     private String author;
-    private int id;
-    private int ISBN;
+    private String id;
+    private String ISBN;
     private boolean availability;
 
     // Constructors
     public Book() {
         this.title = "NA";
         this.author = "NA";
-        this.id = 0;
-        this.ISBN = 0;
+        this.id = UUID.randomUUID().toString();
+        this.ISBN = "NA";
         this.availability = false;
     }
 
-    public Book(String title, String author, int id, int ISBN, boolean availability) {
+    public Book(String title, String author, String ISBN, boolean availability) {
+        this.title = title;
+        this.author = author;
+        this.id = UUID.randomUUID().toString();
+        this.ISBN = ISBN;
+        this.availability = availability;
+    }
+
+    public Book(String title, String author, String id, String ISBN, boolean availability) {
         this.title = title;
         this.author = author;
         this.id = id;
@@ -41,19 +51,19 @@ public class Book {
         this.author = author;
     }
 
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getISBN() {
+    public String getISBN() {
         return this.ISBN;
     }
 
-    public void setISBN(int ISBN) {
+    public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
 
