@@ -14,7 +14,7 @@ public class LibraryManagementSystem {
         Ebook ebook2 = new Ebook("Shadows of the Unknown", "Ava Ramirez","9785678901235", true, 2048, "PDF");
         Ebook ebook3 = new Ebook("Tales from the Abyss", "Oliver Martinez", "9786789012346", false, 5120, "EPUB");
         Ebook ebook4 = new Ebook("Rise of the Fallen", "Mia Collins", "9787890123457", true, 1024, "MOBI");
-        Ebook ebook5 = new Ebook("Into the Starlit Night", "Ethan Foster", "9788901234568", true, 8192, "AZW");
+        Ebook ebook5 = new Ebook("Into the Starlit Night", "Ethan Foster", "9788901234568", true, 8192, "TXT");
 
         ArrayList<Book> bookList1 = new ArrayList<>();
         bookList1.add(book1);
