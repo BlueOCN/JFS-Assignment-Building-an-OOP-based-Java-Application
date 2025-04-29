@@ -3,8 +3,12 @@ import java.util.ArrayList;
 public class LibraryManagementSystem {
     public static void main(String[] args) {
 
-        // Creating books and eBooks.
+        // Create Library.
         Library library = new Library();
+        System.out.println("Library Initial Conditions");
+        library.displayBooks();
+
+        // Creating books and eBooks.
         Book book1 = new Book();
         Book book2 = new Book("The Silent Voyager", "Emma Harper", "9781234567891", true);
         Book book3 = new Book("Whispering Shadows", "Liam Thornton", "9782345678902", true);
@@ -16,6 +20,7 @@ public class LibraryManagementSystem {
         Ebook ebook4 = new Ebook("Rise of the Fallen", "Mia Collins", "9787890123457", true, 1024, "MOBI");
         Ebook ebook5 = new Ebook("Into the Starlit Night", "Ethan Foster", "9788901234568", true, 8192, "TXT");
 
+        // Creating book lists
         ArrayList<Book> bookList1 = new ArrayList<>();
         bookList1.add(book1);
         bookList1.add(ebook1);
@@ -38,6 +43,7 @@ public class LibraryManagementSystem {
         library.addBook(ebook5);
 
         // Display Libraries Inventory
+        System.out.println("\nLibrary after adding all books and ebooks");
         library.displayBooks();
         library.displayAvailableBooks();
         library.displayUnavailableBooks();
@@ -55,6 +61,9 @@ public class LibraryManagementSystem {
         PremiumMember premiumMember5 = new PremiumMember("Ethan Collins", bookList2);
 
         // Register regular and premium members.
+        System.out.println("\nLibrary's Initial Members");
+        library.displayMembers();
+
         library.registerMember(member1);
         library.registerMember(member2);
         library.registerMember(member3);
@@ -67,22 +76,33 @@ public class LibraryManagementSystem {
         library.registerMember(premiumMember5);
 
         // Display regular and premium members.
+        System.out.println("\nLibrary's New Members");
         library.displayMembers();
 
-        // Borrow a book for a member from library.
+        // Borrow a book for a member from the library.
+        System.out.println("\nBorrowing Transaction Demo");
+        System.out.println("\nMember 1 before borrowing transaction");
         member2.displayDetails();
-        premiumMember2.displayDetails();
 
         library.assignBookToMember(member2.getMemberId(), book2.getId());
+
+        System.out.println("\nMember 1 after borrowing transaction");
+        member2.displayDetails();
+
+        // Borrow a book list for a member from the library
+        System.out.println("\nMember 2 before borrowing transaction");
+        premiumMember2.displayDetails();
 
         String[] bookIDs = {book4.getId(), book2.getId(), ebook5.getId(), book3.getId(), book1.getId()};
         library.assignBooksToMember(premiumMember2.getMemberId(), bookIDs);
 
-        library.displayAvailableBooks(); // Books are no longer available
-
-        // Displaying member details along with borrowed books.
-        member2.displayDetails();
+        System.out.println("\nMember 2 after borrowing transaction");
         premiumMember2.displayDetails();
+
+        System.out.println("\nLibrary books after borrowing transactions");
+        library.displayBooks();
+        library.displayAvailableBooks(); // Borrowed books are no longer available
+        library.displayUnavailableBooks();
 
     }
 }
