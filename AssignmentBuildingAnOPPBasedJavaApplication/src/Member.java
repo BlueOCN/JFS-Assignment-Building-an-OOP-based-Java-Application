@@ -118,25 +118,14 @@ public class Member {
      *                                  contains invalid characters, or lacks a first and last name.
      */
     public void setName(String name) {
-        String tmpName = name.trim();
 
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or empty.");
-        }
-        if (tmpName.length() < 2) {
-            throw new IllegalArgumentException("Name must be at least 2 characters long.");
-        }
-        if (tmpName.length() > 50) {
-            throw new IllegalArgumentException("Name cannot be longer than 50 characters.");
-        }
-        if (!tmpName.matches("[a-zA-Z\\s]+")) {
-            throw new IllegalArgumentException("Name can only contain letters and spaces.");
-        }
-        if (!tmpName.contains(" ")) {
-            throw new IllegalArgumentException("Name must include at least a first and last name.");
+        try {
+            isValidName(name);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        this.name = tmpName;
+        this.name = name.trim();
     }
 
     /**
@@ -154,12 +143,13 @@ public class Member {
      * @param memberId The new id to be assigned to the member.
      */
     public void setMemberId(String memberId) {
+
         try {
-            // Validate the member ID by attempting to parse it as a UUID.
-            UUID.fromString(memberId);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid Member ID. It must follow the UUID format.");
+            isValidMemberId(memberId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+
         this.memberId = memberId;
     }
 
@@ -183,21 +173,10 @@ public class Member {
      */
     public void setBorrowedBooks(ArrayList<Book> borrowedBooks) {
 
-        // Ensures the provided borrowedBooks list is not null
-        if (borrowedBooks == null) {
-            throw new IllegalArgumentException("Borrowed books list cannot be null.");
-        }
-
-        // Check for null books in the list
-        for (Book book : borrowedBooks) {
-            if (book == null) {
-                throw new IllegalArgumentException("Borrowed books list cannot contain null entries.");
-            }
-        }
-
-        // Ensure the size of the list does not exceed the borrowing limit
-        if (borrowedBooks.size() > (borrowingLimit - this.borrowedBooks.size())) {
-            throw new IllegalArgumentException("Borrowed books list exceeds the borrowing limit of " + borrowingLimit + " books.");
+        try {
+            areValidBorrowedBooks(borrowedBooks);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         this.borrowedBooks = borrowedBooks;
@@ -220,12 +199,13 @@ public class Member {
      *                                  current number of borrowed books.
      */
     public void setBorrowingLimit(int borrowingLimit) {
-        if (borrowingLimit < 0) {
-            throw new IllegalArgumentException("Borrowing limit cannot be negative.");
+
+        try {
+            isValidBorrowingLimit(borrowingLimit);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        if (borrowingLimit < borrowedBooks.size()) {
-            throw new IllegalArgumentException("Borrowing limit cannot be less than the number of currently borrowed books (" + borrowedBooks.size() + ").");
-        }
+
         this.borrowingLimit = borrowingLimit;
     }
 
@@ -279,14 +259,14 @@ public class Member {
 
     /**
      * Displays the details of the member and the list of borrowed books in a formatted table.
-     *
+     * <p>
      * Prints the member's name and ID, followed by a table of borrowed books including:
      * - Title
      * - Author
      * - ID
      * - ISBN
      * - Availability status
-     *
+     * <p>
      * Formats the table for improved readability using ANSI escape codes for text styling.
      */
     public void displayDetails() {
@@ -317,9 +297,71 @@ public class Member {
         System.out.println("-".repeat(165));
     }
 
+    public static void isValidName(String name) {
+
+        String tmpName = name.trim();
+
+        if (tmpName.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty.");
+        }
+        if (tmpName.length() < 2) {
+            throw new IllegalArgumentException("Name must be at least 2 characters long.");
+        }
+        if (tmpName.length() > 50) {
+            throw new IllegalArgumentException("Name cannot be longer than 50 characters.");
+        }
+        if (!tmpName.matches("[a-zA-Z\\s]+")) {
+            throw new IllegalArgumentException("Name can only contain letters and spaces.");
+        }
+        if (!tmpName.contains(" ")) {
+            throw new IllegalArgumentException("Name must include at least a first and last name.");
+        }
+    }
+
+    public static void isValidMemberId(String memberId) {
+        try {
+            // Validate the member ID by attempting to parse it as a UUID.
+            UUID.fromString(memberId);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid Member ID. It must follow the UUID format.");
+        }
+    }
+
+    public void areValidBorrowedBooks(ArrayList<Book> borrowedBooks) {
+
+        // Ensures the provided borrowedBooks list is not null
+        if (borrowedBooks == null) {
+            throw new IllegalArgumentException("Borrowed books list cannot be null.");
+        }
+
+        // Check for null books in the list
+        for (Book book : borrowedBooks) {
+            if (book == null) {
+                throw new IllegalArgumentException("Borrowed books on the borrowed list cannot contain null entries.");
+            }
+            if (book.getAvailability()){
+                throw new IllegalArgumentException("Borrowed book on the borrowed list cannot be available.");
+            }
+        }
+
+        // Ensure the size of the list does not exceed the borrowing limit
+        if (borrowedBooks.size() > (borrowingLimit - this.borrowedBooks.size())) {
+            throw new IllegalArgumentException("Borrowed books list exceeds the borrowing limit of " + borrowingLimit + " books.");
+        }
+    }
+
+    public void isValidBorrowingLimit(int borrowingLimit) {
+        if (borrowingLimit < 0) {
+            throw new IllegalArgumentException("Borrowing limit cannot be negative.");
+        }
+        if (borrowingLimit < this.borrowedBooks.size()) {
+            throw new IllegalArgumentException("Borrowing limit cannot be less than the number of currently borrowed books (" + this.borrowedBooks.size() + ").");
+        }
+    }
+
     /**
      * Generates a JSON-like string representation of the Member object.
-     *
+     * <p>
      * The string includes the following details:
      * - Member's name
      * - Member's ID

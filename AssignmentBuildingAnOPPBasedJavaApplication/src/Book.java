@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -261,6 +262,43 @@ public class Book {
      */
     public void setAvailability(boolean availability) {
         this.availability = availability;
+    }
+
+    /**
+     * Validates the given books collection to ensure data integrity.
+     * <p>
+     * This method checks that the provided collection of books is not null or empty, and that
+     * each book in the collection meets the following criteria:
+     * - The book itself must not be null.
+     * - The book must have a non-null, non-empty title.
+     * - The book must have a valid ISBN, which is either a 10-digit or 13-digit numeric string.
+     * <p>
+     * If any of these conditions are not met, the method throws an {@code IllegalArgumentException}
+     * with a descriptive error message.
+     *
+     * @param booksCollection The collection of books to validate. Must be non-null, non-empty,
+     *                        and contain valid book objects.
+     * @throws IllegalArgumentException If the books collection is null, empty, or contains invalid books.
+     */
+    public static void areValidBooksCollection(ArrayList<Book> booksCollection) {
+
+        // Validate if new book collection is not null and not empty
+        if (booksCollection == null || booksCollection.isEmpty()) {
+            throw new IllegalArgumentException("Books collection cannot be null or empty.");
+        }
+
+        // Verify that the new books collection does not contain null books
+        for (Book book : booksCollection) {
+            if (book == null) {
+                throw new IllegalArgumentException("Books collection cannot contain null book entries.");
+            }
+            if (book.getTitle() == null || book.getTitle().trim().isEmpty()) {
+                throw new IllegalArgumentException("Each book must have a non-null, non-empty title.");
+            }
+            if (book.getISBN() == null || (!book.getISBN().matches("\\d{10}") && !book.getISBN().matches("\\d{13}"))) {
+                throw new IllegalArgumentException("Each book must have a valid ISBN.");
+            }
+        }
     }
 
     /**
